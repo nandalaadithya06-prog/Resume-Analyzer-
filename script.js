@@ -396,21 +396,22 @@ function animateScore(finalScore){
 
 }
 // ============================================
-// Part 3 - Skills Detection
+// Technical Skill Detection
 // ============================================
 
-function detectSkills(){
+function detectSkills() {
 
-    const skills=[
-
+    const skills = [
         "html",
         "css",
         "javascript",
-        "java",
+        "typescript",
         "python",
-        "c",
+        "java",
         "c++",
+        "c#",
         "react",
+        "node.js",
         "node",
         "express",
         "sql",
@@ -423,16 +424,27 @@ function detectSkills(){
         "figma",
         "aws",
         "docker"
-
     ];
 
-    detectedSkills=[];
+    detectedSkills = [];
 
-    const text=resumeText.toLowerCase();
+    const text = resumeText.toLowerCase();
 
-    skills.forEach(skill=>{
+    skills.forEach(function (skill) {
 
-        if(text.includes(skill)){
+        const escapedSkill = skill.replace(
+            /[.*+?^${}()|[\]\\]/g,
+            "\\$&"
+        );
+
+        const regex = new RegExp(
+            "(^|\\s|[,.;:()\\[\\]{}])" +
+            escapedSkill +
+            "($|\\s|[,.;:()\\[\\]{}])",
+            "i"
+        );
+
+        if (regex.test(text)) {
 
             detectedSkills.push(skill);
 
@@ -537,10 +549,109 @@ function estimatePages(){
 // ============================================
 // Download PDF Report
 // ============================================
+// ============================================
+// PROFESSIONAL PDF REPORT
+// ============================================
 
-downloadBtn.addEventListener("click",()=>{
+// ============================================
+// RESUME INFORMATION EXTRACTION
+// ============================================
 
-    if(resumeText===""){
+function extractContactInfo() {
+
+    const emailMatch = resumeText.match(
+        /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i
+    );
+
+    const phoneMatch = resumeText.match(
+        /(?:\+?\d[\d\s().-]{8,}\d)/
+    );
+
+    const linkedinMatch = resumeText.match(
+        /(?:https?:\/\/)?(?:www\.)?linkedin\.com\/[^\s<]+/i
+    );
+
+    const githubMatch = resumeText.match(
+        /(?:https?:\/\/)?(?:www\.)?github\.com\/[^\s<]+/i
+    );
+
+    return {
+
+        email: emailMatch
+            ? emailMatch[0]
+            : "Not mentioned",
+
+        phone: phoneMatch
+            ? phoneMatch[0].trim()
+            : "Not mentioned",
+
+        linkedin: linkedinMatch
+            ? linkedinMatch[0].replace(/[),.;]+$/, "")
+            : "Not mentioned",
+
+        github: githubMatch
+            ? githubMatch[0].replace(/[),.;]+$/, "")
+            : "Not mentioned"
+
+    };
+
+}
+
+
+// ============================================
+// RESUME SECTION STATUS
+// ============================================
+
+function getSectionStatus() {
+
+    const text = resumeText.toLowerCase();
+
+    return {
+
+        education:
+            text.includes("education")
+                ? "Mentioned"
+                : "Not mentioned",
+
+        skills:
+            text.includes("skills")
+                ? "Mentioned"
+                : "Not mentioned",
+
+        projects:
+            text.includes("project")
+                ? "Mentioned"
+                : "Not mentioned",
+
+        experience:
+            text.includes("experience") ||
+            text.includes("employment") ||
+            text.includes("work history")
+                ? "Mentioned"
+                : "Not mentioned",
+
+        certifications:
+            text.includes("certification") ||
+            text.includes("certificate")
+                ? "Mentioned"
+                : "Not mentioned"
+
+    };
+
+}
+
+
+// ============================================
+// PDF DOWNLOAD
+// ============================================
+
+downloadBtn.addEventListener("click", function () {
+
+    // ----------------------------------------
+    // Check resume
+    // ----------------------------------------
+
+    if (!resumeText || resumeText.trim() === "") {
 
         alert("Please analyze a resume first.");
 
@@ -548,63 +659,1038 @@ downloadBtn.addEventListener("click",()=>{
 
     }
 
-    const {jsPDF}=window.jspdf;
 
-    const pdf=new jsPDF();
+    // ----------------------------------------
+    // Check jsPDF
+    // ----------------------------------------
 
-    pdf.setFontSize(22);
+    if (!window.jspdf) {
 
-    pdf.text("Resume Analyzer Pro",20,20);
+        alert(
+            "PDF library is not loaded. Please check index.html."
+        );
 
-    pdf.setFontSize(14);
+        return;
 
-    pdf.text("Resume Score : "+score+"/100",20,35);
+    }
 
-    pdf.text("Word Count : "+countWords(),20,45);
 
-    pdf.text("Estimated Pages : "+estimatePages(),20,55);
+    const { jsPDF } = window.jspdf;
 
-    pdf.text("Detected Skills",20,70);
 
-    let y=80;
+    // ----------------------------------------
+    // Create PDF
+    // ----------------------------------------
 
-    detectedSkills.forEach(skill=>{
+    const pdf = new jsPDF({
 
-        pdf.text("• " + skill, 20, y);
+        orientation: "portrait",
 
-        y+=8;
+        unit: "mm",
 
-    });
-
-    y+=10;
-
-    pdf.text("Analysis",20,y);
-
-    y+=10;
-
-    reportText.split("\n").forEach(line=>{
-
-        pdf.text(line,20,y);
-
-        y+=8;
+        format: "a4"
 
     });
 
-    y+=10;
 
-    pdf.text("Suggestions",20,y);
+    const pageWidth = 210;
 
-    y+=10;
+    const pageHeight = 297;
 
-    suggestions.forEach(item=>{
+    const margin = 18;
 
-        pdf.text("• "+item,20,y);
+    let y = 20;
 
-        y+=8;
 
-    });
+    // ----------------------------------------
+    // Extract information
+    // ----------------------------------------
 
-    pdf.save("Resume_Report.pdf");
+    const contact = extractContactInfo();
+
+    const sections = getSectionStatus();
+
+
+    // ----------------------------------------
+    // Resume rating
+    // ----------------------------------------
+
+    let rating = "Needs Improvement";
+
+    if (score >= 90) {
+
+        rating = "Excellent";
+
+    }
+    else if (score >= 80) {
+
+        rating = "Very Good";
+
+    }
+    else if (score >= 70) {
+
+        rating = "Good";
+
+    }
+    else if (score >= 60) {
+
+        rating = "Fair";
+
+    }
+
+
+    // ========================================
+    // HELPER FUNCTIONS
+    // ========================================
+
+    function addHeader() {
+
+        pdf.setFillColor(20, 30, 55);
+
+        pdf.rect(
+            0,
+            0,
+            pageWidth,
+            10,
+            "F"
+        );
+
+        pdf.setTextColor(
+            255,
+            255,
+            255
+        );
+
+        pdf.setFont(
+            "helvetica",
+            "bold"
+        );
+
+        pdf.setFontSize(8);
+
+        pdf.text(
+            "RESUME ANALYZER",
+            margin,
+            6.5
+        );
+
+        pdf.setFont(
+            "helvetica",
+            "normal"
+        );
+
+        pdf.text(
+            "Resume Analysis",
+            pageWidth - margin,
+            6.5,
+            {
+                align: "right"
+            }
+        );
+
+        pdf.setTextColor(
+            30,
+            30,
+            30
+        );
+
+    }
+
+
+    function addFooter() {
+
+        pdf.setDrawColor(
+            220,
+            220,
+            220
+        );
+
+        pdf.line(
+            margin,
+            pageHeight - 14,
+            pageWidth - margin,
+            pageHeight - 14
+        );
+
+        pdf.setFont(
+            "helvetica",
+            "normal"
+        );
+
+        pdf.setFontSize(7);
+
+        pdf.setTextColor(
+            120,
+            120,
+            120
+        );
+
+        pdf.text(
+            "Generated by Resume Analyzer",
+            margin,
+            pageHeight - 8
+        );
+
+        pdf.text(
+            "Page " +
+            pdf.internal.getCurrentPageInfo().pageNumber,
+            pageWidth - margin,
+            pageHeight - 8,
+            {
+                align: "right"
+            }
+        );
+
+        pdf.setTextColor(
+            30,
+            30,
+            30
+        );
+
+    }
+
+
+    function newPage() {
+
+        pdf.addPage();
+
+        y = 20;
+
+        addHeader();
+
+    }
+
+
+    function checkSpace(space) {
+
+        if (
+            y + space >
+            pageHeight - 22
+        ) {
+
+            newPage();
+
+        }
+
+    }
+
+
+    function sectionTitle(title) {
+
+        checkSpace(20);
+
+        pdf.setFont(
+            "helvetica",
+            "bold"
+        );
+
+        pdf.setFontSize(13);
+
+        pdf.setTextColor(
+            25,
+            35,
+            55
+        );
+
+        pdf.text(
+            title,
+            margin,
+            y
+        );
+
+        y += 4;
+
+        pdf.setDrawColor(
+            220,
+            225,
+            230
+        );
+
+        pdf.line(
+            margin,
+            y,
+            pageWidth - margin,
+            y
+        );
+
+        y += 9;
+
+    }
+
+
+    function writeLine(label, value) {
+
+        checkSpace(8);
+
+        pdf.setFont(
+            "helvetica",
+            "bold"
+        );
+
+        pdf.setFontSize(9);
+
+        pdf.setTextColor(
+            40,
+            40,
+            40
+        );
+
+        pdf.text(
+            label,
+            margin,
+            y
+        );
+
+        pdf.setFont(
+            "helvetica",
+            "normal"
+        );
+
+        pdf.text(
+            value,
+            margin + 35,
+            y
+        );
+
+        y += 7;
+
+    }
+
+
+    function cleanText(text) {
+
+        return text
+
+            .replace(/[^\x00-\x7F]/g, "")
+
+            .replace(/\[OK\]/gi, "")
+
+            .replace(/\[MISSING\]/gi, "")
+
+            .replace(/\s+/g, " ")
+
+            .trim();
+
+    }
+
+
+    // ========================================
+    // FIRST PAGE HEADER
+    // ========================================
+
+    pdf.setFillColor(
+        20,
+        30,
+        55
+    );
+
+    pdf.rect(
+        0,
+        0,
+        pageWidth,
+        48,
+        "F"
+    );
+
+
+    pdf.setTextColor(
+        255,
+        255,
+        255
+    );
+
+    pdf.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    pdf.setFontSize(24);
+
+    pdf.text(
+        "Resume Analysis",
+        margin,
+        23
+    );
+
+
+    pdf.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    pdf.setFontSize(10);
+
+    pdf.text(
+        "Resume Analyzer",
+        margin,
+        33
+    );
+
+
+    pdf.setFontSize(8);
+
+    pdf.text(
+        new Date().toLocaleDateString(),
+        pageWidth - margin,
+        33,
+        {
+            align: "right"
+        }
+    );
+
+
+    pdf.setTextColor(
+        30,
+        30,
+        30
+    );
+
+
+    y = 62;
+
+
+    // ========================================
+    // SCORE CARD
+    // ========================================
+
+    pdf.setFillColor(
+        245,
+        247,
+        250
+    );
+
+    pdf.roundedRect(
+        margin,
+        y,
+        pageWidth - margin * 2,
+        42,
+        4,
+        4,
+        "F"
+    );
+
+
+    pdf.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    pdf.setFontSize(9);
+
+    pdf.setTextColor(
+        90,
+        90,
+        90
+    );
+
+    pdf.text(
+        "OVERALL RESUME SCORE",
+        margin + 8,
+        y + 10
+    );
+
+
+    pdf.setFontSize(27);
+
+    pdf.setTextColor(
+        25,
+        160,
+        95
+    );
+
+    pdf.text(
+        score + "/100",
+        margin + 8,
+        y + 28
+    );
+
+
+    pdf.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    pdf.setFontSize(11);
+
+    pdf.setTextColor(
+        70,
+        70,
+        70
+    );
+
+    pdf.text(
+        rating,
+        pageWidth - margin - 8,
+        y + 24,
+        {
+            align: "right"
+        }
+    );
+
+
+    y += 55;
+
+
+    // ========================================
+    // STATISTICS
+    // ========================================
+
+    sectionTitle(
+        "Resume Statistics"
+    );
+
+
+    const wordCount =
+        countWords();
+
+    const pageCount =
+        estimatePages();
+
+    const skillCount =
+        detectedSkills.length;
+
+
+    const stats = [
+
+        ["Words", wordCount],
+
+        ["Pages", pageCount],
+
+        ["Skills", skillCount]
+
+    ];
+
+
+    const boxWidth =
+        (pageWidth - margin * 2 - 8) / 3;
+
+
+    stats.forEach(
+        function (stat, index) {
+
+            const x =
+                margin +
+                index * (boxWidth + 4);
+
+
+            pdf.setFillColor(
+                248,
+                249,
+                251
+            );
+
+
+            pdf.roundedRect(
+                x,
+                y,
+                boxWidth,
+                25,
+                3,
+                3,
+                "F"
+            );
+
+
+            pdf.setFont(
+                "helvetica",
+                "bold"
+            );
+
+            pdf.setFontSize(16);
+
+            pdf.setTextColor(
+                35,
+                45,
+                65
+            );
+
+            pdf.text(
+                String(stat[1]),
+                x + 6,
+                y + 11
+            );
+
+
+            pdf.setFont(
+                "helvetica",
+                "normal"
+            );
+
+            pdf.setFontSize(8);
+
+            pdf.setTextColor(
+                100,
+                100,
+                100
+            );
+
+            pdf.text(
+                stat[0],
+                x + 6,
+                y + 19
+            );
+
+        }
+    );
+
+
+    y += 38;
+
+
+    // ========================================
+    // CONTACT INFORMATION
+    // ========================================
+
+    sectionTitle(
+        "Contact Information"
+    );
+
+
+    writeLine(
+        "Email",
+        contact.email
+    );
+
+
+    writeLine(
+        "Phone",
+        contact.phone
+    );
+
+
+    writeLine(
+        "LinkedIn",
+        contact.linkedin
+    );
+
+
+    writeLine(
+        "GitHub",
+        contact.github
+    );
+
+
+    y += 5;
+
+
+    // ========================================
+    // RESUME SECTIONS
+    // ========================================
+
+    sectionTitle(
+        "Resume Sections"
+    );
+
+
+    writeLine(
+        "Education",
+        sections.education
+    );
+
+
+    writeLine(
+        "Skills",
+        sections.skills
+    );
+
+
+    writeLine(
+        "Projects",
+        sections.projects
+    );
+
+
+    writeLine(
+        "Experience",
+        sections.experience
+    );
+
+
+    writeLine(
+        "Certifications",
+        sections.certifications
+    );
+
+
+    y += 5;
+
+
+    // ========================================
+    // TECHNICAL SKILLS
+    // ========================================
+
+    sectionTitle(
+        "Technical Skills"
+    );
+
+
+    if (
+        detectedSkills.length === 0
+    ) {
+
+        pdf.setFont(
+            "helvetica",
+            "normal"
+        );
+
+        pdf.setFontSize(9);
+
+        pdf.text(
+            "Not mentioned",
+            margin,
+            y
+        );
+
+        y += 10;
+
+    }
+    else {
+
+        let skillX =
+            margin;
+
+        let skillY =
+            y;
+
+
+        detectedSkills.forEach(
+            function (skill) {
+
+                const label =
+                    skill.toUpperCase();
+
+
+                pdf.setFont(
+                    "helvetica",
+                    "normal"
+                );
+
+                pdf.setFontSize(8);
+
+
+                const width =
+                    pdf.getTextWidth(label) +
+                    10;
+
+
+                if (
+                    skillX + width >
+                    pageWidth - margin
+                ) {
+
+                    skillX =
+                        margin;
+
+                    skillY += 11;
+
+                }
+
+
+                if (
+                    skillY >
+                    pageHeight - 30
+                ) {
+
+                    newPage();
+
+                    skillX =
+                        margin;
+
+                    skillY =
+                        y;
+
+                }
+
+
+                pdf.setFillColor(
+                    230,
+                    246,
+                    238
+                );
+
+
+                pdf.roundedRect(
+                    skillX,
+                    skillY - 6,
+                    width,
+                    8,
+                    2,
+                    2,
+                    "F"
+                );
+
+
+                pdf.setTextColor(
+                    30,
+                    125,
+                    75
+                );
+
+
+                pdf.text(
+                    label,
+                    skillX + 5,
+                    skillY
+                );
+
+
+                skillX +=
+                    width + 4;
+
+            }
+        );
+
+
+        y =
+            skillY + 14;
+
+    }
+
+
+    // ========================================
+    // ANALYSIS SUMMARY
+    // ========================================
+
+    sectionTitle(
+        "Analysis Summary"
+    );
+
+
+    pdf.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    pdf.setFontSize(9);
+
+    pdf.setTextColor(
+        50,
+        50,
+        50
+    );
+
+
+    const analysisLines =
+        reportText
+            .split("\n")
+            .filter(
+                function (line) {
+
+                    return line.trim() !== "";
+
+                }
+            );
+
+
+    if (
+        analysisLines.length === 0
+    ) {
+
+        pdf.text(
+            "No analysis information available.",
+            margin,
+            y
+        );
+
+        y += 8;
+
+    }
+    else {
+
+        analysisLines.forEach(
+            function (line) {
+
+                checkSpace(8);
+
+
+                let cleanLine =
+                    cleanText(line);
+
+
+                cleanLine =
+                    cleanLine
+                        .replace(
+                            /^Email\s*/i,
+                            "Email: "
+                        )
+                        .replace(
+                            /^Phone Number\s*/i,
+                            "Phone: "
+                        )
+                        .replace(
+                            /^Education\s*/i,
+                            "Education: "
+                        )
+                        .replace(
+                            /^Skills Section\s*/i,
+                            "Skills: "
+                        )
+                        .replace(
+                            /^Projects\s*/i,
+                            "Projects: "
+                        )
+                        .replace(
+                            /^Experience\s*/i,
+                            "Experience: "
+                        )
+                        .replace(
+                            /^Certifications\s*/i,
+                            "Certifications: "
+                        )
+                        .replace(
+                            /^Portfolio Links\s*/i,
+                            "Portfolio Links: "
+                        );
+
+
+                if (
+                    cleanLine.trim() === ""
+                ) {
+
+                    return;
+
+                }
+
+
+                pdf.text(
+                    cleanLine,
+                    margin,
+                    y
+                );
+
+
+                y += 7;
+
+            }
+        );
+
+    }
+
+
+    // ========================================
+    // RECOMMENDATIONS
+    // ========================================
+
+    y += 5;
+
+
+    sectionTitle(
+        "Recommended Improvements"
+    );
+
+
+    pdf.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    pdf.setFontSize(9);
+
+    pdf.setTextColor(
+        50,
+        50,
+        50
+    );
+
+
+    if (
+        suggestions.length === 0
+    ) {
+
+        pdf.text(
+            "No major improvements are required.",
+            margin,
+            y
+        );
+
+        y += 8;
+
+    }
+    else {
+
+        suggestions.forEach(
+            function (suggestion) {
+
+                checkSpace(10);
+
+
+                pdf.setFillColor(
+                    245,
+                    158,
+                    11
+                );
+
+
+                pdf.circle(
+                    margin + 2,
+                    y - 1.5,
+                    1.1,
+                    "F"
+                );
+
+
+                const suggestionLines =
+                    pdf.splitTextToSize(
+                        suggestion,
+                        pageWidth -
+                        margin * 2 -
+                        8
+                    );
+
+
+                suggestionLines.forEach(
+                    function (line) {
+
+                        checkSpace(7);
+
+                        pdf.text(
+                            line,
+                            margin + 7,
+                            y
+                        );
+
+                        y += 6;
+
+                    }
+                );
+
+
+                y += 2;
+
+            }
+        );
+
+    }
+
+
+    // ========================================
+    // FOOTERS
+    // ========================================
+
+    const totalPages =
+        pdf.internal.getNumberOfPages();
+
+
+    for (
+        let page = 1;
+        page <= totalPages;
+        page++
+    ) {
+
+        pdf.setPage(page);
+
+        addFooter();
+
+    }
+
+
+    // ========================================
+    // SAVE PDF
+    // ========================================
+
+    pdf.save(
+        "Resume_Analysis_Report.pdf"
+    );
 
 });
 // ============================================
