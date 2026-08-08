@@ -1,146 +1,165 @@
 # 📄 Resume Analyzer Pro
 
-A modern web application that analyzes resumes uploaded in **PDF** or **TXT** format and provides an overall resume score, detected skills, resume statistics, and downloadable PDF reports.
+> 🚀 Analyze your resume. Improve it. Get hired.
+
+## 🌐 Live Website
+
+👉 **[Open Resume Analyzer Pro]((https://nandalaadithya06-prog.github.io/Resume-Analyzer-/))**
+
+Resume Analyzer Pro is a professional resume analysis tool that evaluates a resume using a strict **100-point scoring system**.
+
+Upload a PDF or TXT resume, preview its content, analyze important resume sections, identify missing information, receive improvement suggestions, and download a professional PDF report.
 
 ---
 
-## 🚀 Features
+## ✨ Features
 
-- 📂 Upload PDF & TXT resumes
-- 📄 Extract text from PDF using PDF.js
-- 👀 Resume Preview
-- 📊 Animated Resume Score
-- 📧 Email Detection
-- 📱 Phone Number Detection
-- 🎓 Education Detection
-- 💻 Skills Detection
-- 📁 Project Detection
-- 💼 Experience Detection
-- 🏆 Certification Detection
-- 🔗 GitHub & LinkedIn Detection
-- 🛠 Technical Skills Detection
-- 💡 Resume Improvement Suggestions
-- 📈 Resume Statistics
-- 📥 Download Analysis Report as PDF
-- 📱 Responsive User Interface
-
----
-
-## 🛠 Technologies Used
-
-- HTML5
-- CSS3
-- JavaScript (ES6)
-- PDF.js
-- jsPDF
-- Google Fonts
-- Font Awesome
+- 📤 Upload PDF or TXT resumes
+- 👀 Resume preview
+- 📊 Strict resume scoring out of 100
+- 📇 Contact information detection
+- 📝 Professional summary evaluation
+- 🎓 Education detection
+- 💻 Technical skills detection
+- 💼 Work experience evaluation
+- 🚀 Project detection
+- 🏆 Certification detection
+- 🔗 GitHub, LinkedIn and portfolio detection
+- 🎯 ATS keyword evaluation
+- 📐 Resume quality and formatting evaluation
+- 💡 Improvement suggestions
+- 📄 Professional PDF report generation
+- 📱 Responsive desktop and mobile design
+- 🎨 Modern 3D / glass-style interface
+- 📑 Floating resume background design
 
 ---
 
-## 📂 Project Structure
+## 🧮 Strict 100-Point Scoring System
 
-```
-Resume-Analyzer-Pro/
+Resume Analyzer Pro uses a strict **100-point scoring model**.
+
+| Category | Points |
+|---|---:|
+| 📇 Contact Information | 10 |
+| 📝 Professional Summary | 8 |
+| 🎓 Education | 10 |
+| 💻 Technical Skills | 15 |
+| 💼 Work Experience | 20 |
+| 🚀 Projects | 12 |
+| 🏆 Certifications | 5 |
+| 🔗 GitHub / LinkedIn / Portfolio | 5 |
+| 🎯 ATS Keywords | 5 |
+| 📐 Quality & Formatting | 10 |
+| **🏅 Total** | **100** |
+
+A high score should be difficult to achieve. The system is designed to identify weaknesses instead of giving every resume an unnecessarily high score.
+
+---
+
+## 🏅 Score Levels
+
+| Score | Rating |
+|---|---|
+| 🔴 0–39 | Needs Major Improvement |
+| 🟠 40–59 | Needs Improvement |
+| 🟡 60–74 | Fair |
+| 🟢 75–89 | Strong |
+| 🔵 90–100 | Exceptional |
+
+---
+
+## 🔍 What the Analyzer Checks
+
+The analyzer evaluates important areas of a resume, including:
+
+- 📇 Contact information
+- 📝 Professional summary
+- 💼 Work experience
+- 💻 Technical skills
+- 🎓 Education
+- 🚀 Projects
+- 🏆 Certifications
+- 🔗 Professional links
+- 🎯 ATS readiness
+- 📐 Resume structure and formatting
+
+If important information is missing, the analyzer can identify the weakness and provide an improvement suggestion.
+
+---
+
+## 📄 PDF Report
+
+After analysis, users can generate a downloadable PDF report containing:
+
+- 📊 Overall resume score
+- 📈 Resume statistics
+- 💻 Detected skills
+- 🔍 Resume analysis
+- ⚠️ Missing information
+- 💡 Improvement suggestions
+
+The goal is to provide a clean and professional report that can be reviewed later.
+
+---
+
+## 🖥️ How to Use
+
+### 1️⃣ Open the website
+
+Visit:
+
+👉 (https://nandalaadithya06-prog.github.io/Resume-Analyzer-/)
+
+### 2️⃣ Upload your resume
+
+Click **Choose Resume** and select a PDF or TXT resume.
+
+### 3️⃣ Analyze
+
+Click **Analyze Resume**.
+
+### 4️⃣ Review your results
+
+Check your:
+
+- Resume score
+- Resume preview
+- Resume analysis
+- Detected skills
+- Missing sections
+- Suggestions
+
+### 5️⃣ Download
+
+Click **Download PDF Report** to generate your report.
+
+---
+
+## 🛠️ Technologies Used
+
+- 🌐 HTML5
+- 🎨 CSS3
+- ⚡ JavaScript
+- 📄 PDF.js
+- 📝 jsPDF
+
+### PDF.js
+
+Used to extract text from PDF resumes.
+
+### jsPDF
+
+Used to generate downloadable PDF analysis reports.
+
+---
+
+## 📁 Project Structure
+
+```text
+AI-Resume-Analyzer/
 │
 ├── index.html
 ├── style.css
 ├── script.js
-├── README.md
-└── assets/
-```
-
----
-
-## 📷 Screenshot
-
-> Add a screenshot of your project here after uploading it to GitHub.
-
-Example:
-
-```
-assets/screenshot.png
-```
-
----
-
-## ⚙️ How to Run
-
-1. Download or clone the repository.
-
-2. Open the project folder.
-
-3. Open `index.html` in your browser.
-
-4. Upload a PDF or TXT resume.
-
-5. Click **Analyze Resume**.
-
-6. View the analysis and download the PDF report.
-
----
-
-## 📊 Resume Analysis Includes
-
-- Resume Score
-- Email Detection
-- Phone Number Detection
-- Education
-- Skills
-- Projects
-- Experience
-- Certifications
-- GitHub/LinkedIn Links
-- Technical Skills
-- Resume Statistics
-- Suggestions for Improvement
-
----
-
-## 🎯 Future Improvements
-
-- 🤖 AI Resume Suggestions (Gemini/OpenAI)
-- ATS Compatibility Score
-- Drag & Drop Resume Upload
-- Multiple Resume Comparison
-- Resume Templates
-- Resume Keyword Matching
-- Dark Mode
-- Cloud Storage
-
----
-
-## 💡 What I Learned
-
-Through this project I learned:
-
-- DOM Manipulation
-- JavaScript File Handling
-- PDF Parsing using PDF.js
-- Dynamic UI Updates
-- JavaScript Regular Expressions
-- Responsive Web Design
-- PDF Generation using jsPDF
-- Git & GitHub
-
----
-
-## 👨‍💻 Author
-
-**Your Name**
-
-GitHub: https://github.com/YOUR_GITHUB_USERNAME
-
-LinkedIn: https://linkedin.com/in/YOUR_LINKEDIN
-
----
-
-## ⭐ If you like this project
-
-Please consider giving this repository a ⭐ on GitHub.
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License.
+└── README.md
