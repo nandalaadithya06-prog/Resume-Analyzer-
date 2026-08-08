@@ -1,43 +1,43 @@
-# 📄 Resume Analyzer Pro
+# 📄 Resume Analyzer
 
 > 🚀 Analyze your resume. Improve it. Get hired.
 
 ## 🌐 Live Website
 
-👉 **[Open Resume Analyzer Pro]((https://nandalaadithya06-prog.github.io/Resume-Analyzer-/))**
+👉 **[Open Resume Analyzer](https://nandalaadithya06-prog.github.io/Resume-Analyzer-/)**
 
-Resume Analyzer Pro is a professional resume analysis tool that evaluates a resume using a strict **100-point scoring system**.
+Resume Analyzer is a web-based resume evaluation tool designed to help users understand the strengths and weaknesses of their resumes.
 
-Upload a PDF or TXT resume, preview its content, analyze important resume sections, identify missing information, receive improvement suggestions, and download a professional PDF report.
+Upload your resume, analyze important sections, review your score, and get useful suggestions for improvement.
 
 ---
 
 ## ✨ Features
 
-- 📤 Upload PDF or TXT resumes
-- 👀 Resume preview
-- 📊 Strict resume scoring out of 100
-- 📇 Contact information detection
-- 📝 Professional summary evaluation
-- 🎓 Education detection
-- 💻 Technical skills detection
-- 💼 Work experience evaluation
-- 🚀 Project detection
-- 🏆 Certification detection
-- 🔗 GitHub, LinkedIn and portfolio detection
-- 🎯 ATS keyword evaluation
-- 📐 Resume quality and formatting evaluation
-- 💡 Improvement suggestions
-- 📄 Professional PDF report generation
-- 📱 Responsive desktop and mobile design
-- 🎨 Modern 3D / glass-style interface
-- 📑 Floating resume background design
+- 📤 Upload Resume
+- 📄 PDF/TXT Resume Support
+- 👀 Resume Preview
+- 📊 Resume Score
+- 🧮 100-Point Scoring System
+- 📇 Contact Information Detection
+- 📝 Professional Summary Analysis
+- 🎓 Education Detection
+- 💻 Technical Skills Detection
+- 💼 Work Experience Analysis
+- 🚀 Project Detection
+- 🏆 Certification Detection
+- 🔗 Portfolio / GitHub / LinkedIn Detection
+- 🎯 ATS Readiness Evaluation
+- 💡 Resume Improvement Suggestions
+- 📥 Downloadable PDF Report
+- 📱 Responsive Design
+- 🎨 Modern Professional UI
 
 ---
 
-## 🧮 Strict 100-Point Scoring System
+## 🧮 Scoring System
 
-Resume Analyzer Pro uses a strict **100-point scoring model**.
+The resume is evaluated using a **100-point scoring system**.
 
 | Category | Points |
 |---|---:|
@@ -53,7 +53,7 @@ Resume Analyzer Pro uses a strict **100-point scoring model**.
 | 📐 Quality & Formatting | 10 |
 | **🏅 Total** | **100** |
 
-A high score should be difficult to achieve. The system is designed to identify weaknesses instead of giving every resume an unnecessarily high score.
+The scoring system is designed to be strict so that a high score represents a strong and complete resume.
 
 ---
 
@@ -69,28 +69,50 @@ A high score should be difficult to achieve. The system is designed to identify 
 
 ---
 
-## 🔍 What the Analyzer Checks
+## 🔍 What Is Analyzed?
 
-The analyzer evaluates important areas of a resume, including:
+Resume Analyzer checks important resume sections such as:
 
-- 📇 Contact information
-- 📝 Professional summary
-- 💼 Work experience
-- 💻 Technical skills
-- 🎓 Education
-- 🚀 Projects
-- 🏆 Certifications
-- 🔗 Professional links
-- 🎯 ATS readiness
-- 📐 Resume structure and formatting
+### 📇 Contact Information
+Checks for important contact details such as:
 
-If important information is missing, the analyzer can identify the weakness and provide an improvement suggestion.
+- Email
+- Phone number
+- Location
+
+### 📝 Professional Summary
+Checks whether the resume contains a clear and relevant professional summary.
+
+### 💼 Experience
+Evaluates work experience, internships and professional background.
+
+### 💻 Skills
+Detects technical skills and relevant keywords.
+
+### 🎓 Education
+Checks educational qualifications and academic information.
+
+### 🚀 Projects
+Checks for relevant projects and practical experience.
+
+### 🏆 Certifications
+Identifies professional certifications and additional qualifications.
+
+### 🔗 Online Profiles
+Checks for professional links such as:
+
+- GitHub
+- LinkedIn
+- Portfolio
+
+### 🎯 ATS Readiness
+Evaluates important resume characteristics that can affect ATS readability and keyword coverage.
 
 ---
 
 ## 📄 PDF Report
 
-After analysis, users can generate a downloadable PDF report containing:
+After completing the analysis, users can download a PDF report containing information such as:
 
 - 📊 Overall resume score
 - 📈 Resume statistics
@@ -99,40 +121,40 @@ After analysis, users can generate a downloadable PDF report containing:
 - ⚠️ Missing information
 - 💡 Improvement suggestions
 
-The goal is to provide a clean and professional report that can be reviewed later.
+The report is designed to provide a clear summary of the resume evaluation.
 
 ---
 
 ## 🖥️ How to Use
 
-### 1️⃣ Open the website
+### 1️⃣ Open the Website
 
 Visit:
 
-👉 (https://nandalaadithya06-prog.github.io/Resume-Analyzer-/)
+👉 **https://nandalaadithya06-prog.github.io/Resume-Analyzer-/**
 
-### 2️⃣ Upload your resume
+### 2️⃣ Upload Your Resume
 
-Click **Choose Resume** and select a PDF or TXT resume.
+Click **Choose Resume** and select your resume.
 
 ### 3️⃣ Analyze
 
 Click **Analyze Resume**.
 
-### 4️⃣ Review your results
+### 4️⃣ Review Results
 
-Check your:
+Review:
 
-- Resume score
-- Resume preview
-- Resume analysis
-- Detected skills
-- Missing sections
-- Suggestions
+- 📊 Resume score
+- 📄 Resume preview
+- 🔍 Resume analysis
+- 💻 Detected skills
+- ⚠️ Missing information
+- 💡 Suggestions
 
-### 5️⃣ Download
+### 5️⃣ Download Report
 
-Click **Download PDF Report** to generate your report.
+Click **Download PDF Report** to generate your resume analysis report.
 
 ---
 
@@ -144,20 +166,32 @@ Click **Download PDF Report** to generate your report.
 - 📄 PDF.js
 - 📝 jsPDF
 
+### HTML5
+
+Used to create the structure of the application.
+
+### CSS3
+
+Used to create the responsive and professional user interface.
+
+### JavaScript
+
+Used for resume processing, analysis, scoring and application functionality.
+
 ### PDF.js
 
-Used to extract text from PDF resumes.
+Used for extracting text from PDF resumes.
 
 ### jsPDF
 
-Used to generate downloadable PDF analysis reports.
+Used to generate downloadable PDF reports.
 
 ---
 
 ## 📁 Project Structure
 
 ```text
-AI-Resume-Analyzer/
+Resume-Analyzer/
 │
 ├── index.html
 ├── style.css
